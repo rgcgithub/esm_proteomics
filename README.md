@@ -45,8 +45,8 @@ These classifications can be used for:
 - Informing burden testing strategies in association studies
 - Guiding experimental validation efforts
 
-### Output File
-- **Path**: `./combined_scores_all_chroms.deduplicated.reranked.with_variant_classifications.tsv.gz`
+### Output Files
+- **Path**: `scores/combined_scores_chr*.deduplicated.reranked.with_variant_classifications.tsv`
 - **Format**: Compressed TSV with tabix index
 - **Compression**: bgzip
 - **Index**: tabix (chromosome, position-based)
