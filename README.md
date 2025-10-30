@@ -46,7 +46,7 @@ These classifications can be used for:
 - Guiding experimental validation efforts
 
 ### Output Files
-- **Path**: `scores/combined_scores_chr*.deduplicated.reranked.with_variant_classifications.tsv`
+- **Path**: `scores/combined_scores_chr*.deduplicated.reranked.with_variant_classifications.tsv.gz`
 - **Format**: Compressed TSV with tabix index
 - **Compression**: bgzip
 - **Index**: tabix (chromosome, position-based)
