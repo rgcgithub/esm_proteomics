@@ -27,7 +27,9 @@ Both scoring methods classify missense variants into four categories based on pr
 
 
 #### Classification Thresholds
-The script applies the following thresholds to both ESM1b scoring methods:
+Thresholds applied to both ESM-1b scoring methods.
+Variants were ranked from least to most deleterious across all possible missense variants from Ensembl 100 canonical transcripts.
+This results in a score from 0 (least deleterious) to 1 (most deleterious) for all variants. 
 
 | Classification | Score Range |
 |----------------|-------------|
@@ -36,16 +38,9 @@ The script applies the following thresholds to both ESM1b scoring methods:
 | **Likely_deleterious** | 0.68318 - 0.78 |
 | **Likely_deleterious_strict** | 0.78 - 1.0 |
 
+Likely_deleterious_strict was used in the manuscript. Scores > 0.68318 (Likely_deleterious or Likely_deleterious_strict) would match AlphaMissense in terms of the percentage of predicted deleterious missense variants.
 
-### Clinical and Research Applications
-
-These classifications can be used for:
-- Prioritizing variants in genetic studies and clinical sequencing
-- Understanding the functional spectrum of human genetic variation
-- Informing burden testing strategies in association studies
-- Guiding experimental validation efforts
-
-### Output Files
+### Files with scores
 - **Path**: `scores/combined_scores_chr*.deduplicated.reranked.with_variant_classifications.tsv.gz`
 - **Format**: Compressed TSV with tabix index
 - **Compression**: bgzip
