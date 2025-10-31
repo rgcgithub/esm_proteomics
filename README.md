@@ -49,7 +49,7 @@ Likely_deleterious_strict was used in the manuscript. Scores > 0.68318 (Likely_d
 ### Output Columns
 1. `#chrom`: Chromosome
 2. `pos`: Position
-3. `variant`: Variant identifier
+3. `variant`: Variant identifier (chromosome:position:reference:alternative)
 4. `Ensembl_geneid`: Gene ID (Ensembl 100)
 5. `Ensembl_tsid`: Transcript ID (Ensembl 100)
 6. `ESM1b_proteomics_variant_classification`: ESM-1b Proteomics-based missense variant classification
