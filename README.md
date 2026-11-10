@@ -1,35 +1,16 @@
+# Variant Classification Using Proteomics‐Informed Large Language Models Increases Power of Rare Variant Association Studies and Enhances Target Discovery
 
-# Variant Classification Using Proteomics‐Informed Large Language Models Increases Power of Rare VariantAssociation Studies and Enhances Target Discovery
+Paper: Gillies CE, Mbatchou J, Habegger L, et al. Variant Classification Using Proteomics-Informed Large Language Models Increases Power of Rare Variant Association Studies and Enhances Target Discovery. Genetic Epidemiology. Published 3 November 2025. https://doi.org/10.1002/gepi.70023
 
-## Study Background
+## Overview
 
-This work represents the development and application of protein language models for predicting the functional consequences of missense variants in human proteins. Our study leverages the ESM-1b (Evolutionary Scale Modeling 1b) protein language model, which was trained on millions of protein sequences to learn evolutionary patterns and structural constraints that govern protein function.
+Missense variant classifications from protein language models (ESM-1b and ESM-1v), for all possible single-nucleotide missense variants on Ensembl 100 canonical transcripts. Each model is provided in two forms:
+- **Standard** (`ESM1b_std`, `ESM1v_std`): direct application of the pretrained model.
+- **Proteomics-informed** (`ESM1b_proteomics`, `ESM1v_proteomics`): the model trained with labels from large-scale protein quantitative trait loci (pQTL) studies.
 
-### Motivation
+## Classification
 
-Traditional approaches for predicting missense variant pathogenicity often rely on evolutionary conservation scores, structural features, or combinations of multiple prediction algorithms. However, protein language models offer a fundamentally different approach by learning the "grammar" of protein sequences directly from large-scale evolutionary data, potentially capturing subtle functional constraints that may be missed by other methods.
-
-### Study Design
-
-We computed two complementary scoring approaches using the ESM1b model:
-1. **Standard ESM-1b scoring** (`ESM1b_std_variant_classification`): Direct application of ESM1b likelihood scores
-2. **Proteomics-informed ESM-1b scoring** (`ESM1b_proteomics_variant_classification`): ESM1b scores enhanced with proteomics training
-
-The proteomics-informed approach incorporates additional biological context from large-scale protein quantitative trait loci (pQTL) studies, allowing the model to learn patterns that are specifically relevant to protein function as measured through proteomic assays.
-
-### Classification Framework
-
-Both scoring methods classify missense variants into four categories based on predicted functional impact:
-- **Likely_benign**: Variants predicted to have minimal functional impact
-- **Intermediate**: Variants with uncertain or moderate predicted impact  
-- **Likely_deleterious**: Variants predicted to have significant functional impact
-- **Likely_deleterious_strict**: Variants predicted to have severe functional impact
-
-
-#### Classification Thresholds
-Thresholds applied to both ESM-1b scoring methods.
-Variants were ranked from least to most deleterious across all possible missense variants from Ensembl 100 canonical transcripts.
-This results in a score from 0 (least deleterious) to 1 (most deleterious) for all variants. 
+Variants are ranked from least to most deleterious across all possible missense variants, giving a rank score from 0 (least deleterious) to 1 (most deleterious). All four methods use the same thresholds:
 
 | Classification | Score Range |
 |----------------|-------------|
@@ -38,22 +19,32 @@ This results in a score from 0 (least deleterious) to 1 (most deleterious) for a
 | **Likely_deleterious** | 0.68318 - 0.78 |
 | **Likely_deleterious_strict** | 0.78 - 1.0 |
 
-Likely_deleterious_strict was used in the manuscript. Scores > 0.68318 (Likely_deleterious or Likely_deleterious_strict) would match AlphaMissense in terms of the percentage of predicted deleterious missense variants.
+- Likely_deleterious_strict (top 22%) was used in the manuscript, where deleterious missense variants were the top 22% scoring variants. The 22% was chosen to match the proportion selected by the 5-method ensemble (SIFT, MutationTaster, LRT, PolyPhen-2 HVAR, PolyPhen-2 HDIV).
+- Scores > 0.68318 (Likely_deleterious or Likely_deleterious_strict) match AlphaMissense in the percentage of predicted deleterious missense variants.
 
-### Files with scores
-- **Path**: `scores/combined_scores_chr*.deduplicated.reranked.with_variant_classifications.tsv.gz`
-- **Format**: Compressed TSV with tabix index
-- **Compression**: bgzip
-- **Index**: tabix (chromosome, position-based)
+## Files
 
-### Output Columns
+In `scores/`, one file per chromosome (bgzip-compressed, tabix-indexed by chromosome and position):
+
+| File | Strict cutoff | Use |
+|------|---------------|-----|
+| `combined_scores_chr*.deduplicated.reranked.with_variant_classifications.tsv.gz` | 0.78 | Version used in the paper |
+| `combined_scores_chr*.deduplicated.reranked.exact_0.776724.with_variant_classifications.tsv.gz` | 0.776724 | Supplementary: the exact cutoff matching the 5-method ensemble (top 22.33%); the paper rounds this to 0.78 |
+
+The two versions have the same columns and the other cutoffs (0.34, 0.68318) are identical.
+
+### Columns
 1. `#chrom`: Chromosome
 2. `pos`: Position
 3. `variant`: Variant identifier (chromosome:position:reference:alternative)
 4. `Ensembl_geneid`: Gene ID (Ensembl 100)
 5. `Ensembl_tsid`: Transcript ID (Ensembl 100)
-6. `ESM1b_proteomics_variant_classification`: ESM-1b Proteomics-based missense variant classification
-7. `ESM1b_std_variant_classification`: Standard ESM-1b missense variant classification
+6. `ESM1b_proteomics_variant_classification`: ESM-1b + proteomics
+7. `ESM1b_std_variant_classification`: Standard ESM-1b
+8. `ESM1v_proteomics_variant_classification`: ESM-1v + proteomics
+9. `ESM1v_std_variant_classification`: Standard ESM-1v
+
+A classification is empty when the variant has no score from that method.
 
 ## Classification Distribution of ESM-1b+proteomics and standard ESM-1b
 
@@ -67,12 +58,4 @@ Likely_deleterious_strict was used in the manuscript. Scores > 0.68318 (Likely_d
 
 ## License
 
-This work is licensed under the Creative Commons Attribution-NonCommercial 4.0 International License (CC BY-NC 4.0). This license allows for sharing and adaptation of the material for non-commercial purposes with appropriate attribution. Commercial use is not permitted without explicit permission.
-
-**License Details:**
-- **Share**: Copy and redistribute the material in any medium or format
-- **Adapt**: Remix, transform, and build upon the material
-- **Attribution**: You must give appropriate credit and indicate if changes were made
-- **NonCommercial**: You may not use the material for commercial purposes
-
-For the full license text, visit: https://creativecommons.org/licenses/by-nc/4.0/deed.en
+This work is licensed under the [Creative Commons Attribution-NonCommercial 4.0 International License (CC BY-NC 4.0)](https://creativecommons.org/licenses/by-nc/4.0/deed.en). **Commercial use is not permitted** without explicit permission.
