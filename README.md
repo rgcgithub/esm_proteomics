@@ -2,6 +2,14 @@
 
 Paper: Gillies CE, Mbatchou J, Habegger L, et al. Variant Classification Using Proteomics-Informed Large Language Models Increases Power of Rare Variant Association Studies and Enhances Target Discovery. Genetic Epidemiology. Published 3 November 2025. https://doi.org/10.1002/gepi.70023
 
+## Study Background
+
+This work represents the development and application of protein language models for predicting the functional consequences of missense variants in human proteins. Our study leverages the ESM-1b and ESM-1v (Evolutionary Scale Modeling) protein language models, which were trained on millions of protein sequences to learn evolutionary patterns and structural constraints that govern protein function.
+
+### Motivation
+
+Traditional approaches for predicting missense variant pathogenicity often rely on evolutionary conservation scores, structural features, or combinations of multiple prediction algorithms. However, protein language models offer a fundamentally different approach by learning the "grammar" of protein sequences directly from large-scale evolutionary data, potentially capturing subtle functional constraints that may be missed by other methods.
+
 ## Overview
 
 Missense variant classifications from protein language models (ESM-1b and ESM-1v), for all possible single-nucleotide missense variants on Ensembl 100 canonical transcripts. Each model is provided in two forms:
