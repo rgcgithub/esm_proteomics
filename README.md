@@ -32,14 +32,7 @@ Variants are ranked from least to most deleterious across all possible missense 
 
 ## Files
 
-In `scores/`, one file per chromosome (bgzip-compressed, tabix-indexed by chromosome and position):
-
-| File | Strict cutoff | Use |
-|------|---------------|-----|
-| `combined_scores_chr*.deduplicated.reranked.with_variant_classifications.tsv.gz` | 0.78 | Version used in the paper |
-| `combined_scores_chr*.deduplicated.reranked.exact_0.776724.with_variant_classifications.tsv.gz` | 0.776724 | Supplementary: the exact cutoff matching the 5-method ensemble (top 22.33%); the paper rounds this to 0.78 |
-
-The two versions have the same columns and the other cutoffs (0.34, 0.68318) are identical.
+In `scores/`, one file per chromosome (bgzip-compressed, tabix-indexed by chromosome and position): `combined_scores_chr*.deduplicated.reranked.with_variant_classifications.tsv.gz`
 
 ### Columns
 1. `#chrom`: Chromosome
